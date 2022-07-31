@@ -1,2 +1,2 @@
 # Task-List
-Simple task list with local storage.
+Simple task list with local storage
