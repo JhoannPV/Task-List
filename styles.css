@@ -1,0 +1,39 @@
+body {
+    background-image: url("images/cruz.jpg");
+    font-family: "Raleway", sans-serif;
+}
+
+div {
+    align-items: center;
+    color: rgb(240, 243, 248);
+    margin: 20px;
+    padding: 20px 8px 5px 8px;
+}
+
+.mt-5 {
+    background-color: rgb(236, 231, 231);
+    border-radius: 8px;
+}
+
+.mt-5 h3 {
+    text-align: center;
+    color: rgb(55, 76, 94)
+}
+
+.mt-5 .mt-4 {
+    color: rgb(65, 89, 105);
+}
+
+.mt-5 .mt-4 .btn {
+    background-color: rgb(78, 114, 148);
+    border-color: rgb(49, 85, 102);
+}
+
+.mt-5 .mt-4 .btn:hover {
+    background-color: rgb(135, 168, 184);
+
+}
+
+.material-icons:hover {
+    cursor: pointer;
+}
