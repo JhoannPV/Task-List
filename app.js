@@ -1,37 +1,35 @@
 // Variables Globlales
-const formularioUI = document.querySelector('#formulario');
-const ListadeComprasUI = document.getElementById('ListadeCompras');
-let arrayListadeCompras = [];
+const FormUI = document.querySelector('#form');
+const TaskListUI = document.getElementById('TaskList');
+let arrayTaskList = [];
 // Funciones
-const CrearItem = (producto, cantidad, marca) => {
+const CreateItem = (task) => {
     let item = {
-        producto: producto,
-        cantidad: cantidad,
-        marca: marca,
-        estado: "No Comprado"
+        task: task,
+        status: "not done"
     }
-    arrayListadeCompras.push(item);
+    arrayTaskList.push(item);
     return item;
 }
-const GuardarDB = () => {
-    localStorage.setItem('compras', JSON.stringify(arrayListadeCompras));
-    PintarDB();
+const SaveDB = () => {
+    localStorage.setItem('tasks', JSON.stringify(arrayTaskList));
+    PaintDB();
 }
-const PintarDB = () => {
-    ListadeComprasUI.innerHTML = '';
-    arrayListadeCompras = JSON.parse(localStorage.getItem('compras'));
-    if(arrayListadeCompras === null){
-        arrayListadeCompras = [];
+const PaintDB = () => {
+    TaskListUI.innerHTML = '';
+    arrayTaskList = JSON.parse(localStorage.getItem('tasks'));
+    if(arrayTaskList === null){
+        arrayTaskList = [];
     }else{
-        arrayListadeCompras.forEach(Element => {
-            if(Element.estado == "Comprado"){
-                ListadeComprasUI.innerHTML += `<div class="alert alert-success" role="alert">
+        arrayTaskList.forEach(Element => {
+            if(Element.status == "done"){
+                TaskListUI.innerHTML += `<div class="alert alert-success" role="alert">
                 <span class="material-icons float-lg-start me-2">check_circle_outline</span>
                 Producto: <b>${Element.producto}</b> - Marca: <b>${Element.marca}</b> - Cantidad: <b>${Element.cantidad}</b> - Estado: <b>${Element.estado}</b>
                 <span class="float-lg-end"><span class="material-icons">done</span>
                 <span class="material-icons">delete</span></span></div>`;
-            }else if(Element.estado == "No Comprado"){
-                ListadeComprasUI.innerHTML += `<div class="alert alert-danger" role="alert">
+            }else if(Element.status == "not done"){
+                TaskListUI.innerHTML += `<div class="alert alert-danger" role="alert">
                 <span class="material-icons float-lg-start me-2">shopping_cart</span>
                 Producto: <b>${Element.producto}</b> - Marca: <b>${Element.marca}</b> - Cantidad: <b>${Element.cantidad}</b> - Estado: <b>${Element.estado}</b>
                 <span class="float-lg-end"><span class="material-icons">done</span>
@@ -41,25 +39,25 @@ const PintarDB = () => {
     }
 }
 
-const EliminarDB = (producto, marca, cantidad) =>{
+const DeleteDB = (task) =>{
     let indexArray;
-    arrayListadeCompras.forEach((elemento,index) => {
-        if(elemento.producto === producto && elemento.marca === marca && elemento.cantidad === cantidad){
+    arrayTaskList.forEach((element,index) => {
+        if(element.producto === producto && element.marca === marca && element.cantidad === cantidad){
             indexArray = index;
         }
     })
-    arrayListadeCompras.splice(indexArray,1);
-    GuardarDB();
+    arrayTaskList.splice(indexArray,1);
+    SaveDB();
 } 
 
-const EditarDB = (producto, marca, cantidad) =>{
-    let indexArray = arrayListadeCompras.findIndex((elemento) =>
-        elemento.producto === producto && elemento.marca === marca && elemento.cantidad === cantidad);
-    arrayListadeCompras[indexArray].estado = "Comprado";
+const EditDB = (task) =>{
+    let indexArray = arrayTaskList.findIndex((element) =>
+        element.producto === producto && element.marca === marca && element.cantidad === cantidad);
+    arrayTaskList[indexArray].estatus = "done";
     GuardarDB();
 }
 //EventListener
-formularioUI.addEventListener('submit', (e) => {
+FormUI.addEventListener('submit', (e) => {
     e.preventDefault();
     let productoUI = document.getElementById('producto').value;
     let cantidadUI = document.getElementById('cantidad').value;
@@ -72,9 +70,9 @@ formularioUI.addEventListener('submit', (e) => {
             marcaUI="No especificada";
         }
       
-  CrearItem(productoUI, cantidadUI, marcaUI);
-        GuardarDB();
-        formularioUI.reset();
+  CreateItem(taskUI);
+        SaveDB();
+        FormUI.reset();
     }
     
 });

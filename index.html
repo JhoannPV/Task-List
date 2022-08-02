@@ -25,26 +25,22 @@
             <img src="/images/TaskListHeader.png" width=115px>
         </h3>
 
-        <form id="formulario" class="mt-4">
-            <label for="producto"><b>Producto</b><span style="color: red;"> * </span></label>
-            <input type="text" id="producto" class="form-control my-3" required />
-
-            <label for="marca"><b>Marca</b></label>
-            <input type="text" id="marca" class="form-control my-3" />
-
-            <label for="cantidad"><b>Cantidad</b><span style="color: red;"> * </span></label>
-            <input type="text" id="cantidad" class="form-control my-3" required />
+        <form id="form" class="mt-4">
+            <label for="task"><b>Task</b></label>
+            <input type="text" id="task" class="form-control my-3" required />
 
             <center>
-                <button type="submit" class="btn btn-primary">Agregar</button>
+                <button type="submit" class="btn btn-primary">
+                    <span class="material-icons float-start"> add_task </span>
+                </button>
             </center>
         </form>
 
-        <div id="ListadeCompras" class="mt-4">
+        <div id="TaskList" class="mt-4">
             <div class="alert alert-danger" role="alert">
-                <span class="material-icons float-lg-start me-2"> shopping_cart </span>
+                <span class="material-icons float-lg-start me-2"> article </span>
 
-                <b>Lista de Compras</b> - Estado
+                <b>Task List</b> - Estado
 
                 <span class="float-lg-end">
                     <span class="material-icons"> done </span>
