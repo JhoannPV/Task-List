@@ -1,8 +1,8 @@
-// Variables Globlales
+// Global Variables
 const FormUI = document.querySelector('#form');
 const TaskListUI = document.getElementById('TaskList');
 let arrayTaskList = [];
-// Funciones
+// Functions
 const CreateItem = (task) => {
     let item = {
         task: task,
@@ -25,13 +25,13 @@ const PaintDB = () => {
             if(Element.status == "done"){
                 TaskListUI.innerHTML += `<div class="alert alert-success" role="alert">
                 <span class="material-icons float-lg-start me-2">check_circle_outline</span>
-                Producto: <b>${Element.producto}</b> - Marca: <b>${Element.marca}</b> - Cantidad: <b>${Element.cantidad}</b> - Estado: <b>${Element.estado}</b>
+                <span>${Element.task}</span>
                 <span class="float-lg-end"><span class="material-icons">done</span>
                 <span class="material-icons">delete</span></span></div>`;
             }else if(Element.status == "not done"){
                 TaskListUI.innerHTML += `<div class="alert alert-danger" role="alert">
-                <span class="material-icons float-lg-start me-2">shopping_cart</span>
-                Producto: <b>${Element.producto}</b> - Marca: <b>${Element.marca}</b> - Cantidad: <b>${Element.cantidad}</b> - Estado: <b>${Element.estado}</b>
+                <span class="material-icons float-lg-start me-2">article</span>
+                <span>${Element.task}</span>
                 <span class="float-lg-end"><span class="material-icons">done</span>
                 <span class="material-icons">delete</span></span></div>`;
             }
@@ -42,7 +42,7 @@ const PaintDB = () => {
 const DeleteDB = (task) =>{
     let indexArray;
     arrayTaskList.forEach((element,index) => {
-        if(element.producto === producto && element.marca === marca && element.cantidad === cantidad){
+        if(element.task === task){
             indexArray = index;
         }
     })
@@ -50,48 +50,40 @@ const DeleteDB = (task) =>{
     SaveDB();
 } 
 
-const EditDB = (task) =>{
+const ChangeStatusDB = (task) =>{
     let indexArray = arrayTaskList.findIndex((element) =>
-        element.producto === producto && element.marca === marca && element.cantidad === cantidad);
-    arrayTaskList[indexArray].estatus = "done";
-    GuardarDB();
+        element.task === task);
+    arrayTaskList[indexArray].status = "done";
+    SaveDB();
 }
 //EventListener
 FormUI.addEventListener('submit', (e) => {
     e.preventDefault();
-    let productoUI = document.getElementById('producto').value;
-    let cantidadUI = document.getElementById('cantidad').value;
-    let marcaUI= document.getElementById('marca').value;
+    let taskUI = document.getElementById('task').value;
     
-    if(cantidadUI=="" || productoUI==""){
-        alert("Debe rellenar todos los campos con *");
+    if(taskUI==""){
+        alert("You must type the task before you can add it to the list");
     }else{
-        if(marcaUI==""){
-            marcaUI="No especificada";
-        }
-      
-  CreateItem(taskUI);
+        CreateItem(taskUI);
         SaveDB();
         FormUI.reset();
     }
     
 });
 
-document.addEventListener('DOMContentLoaded', PintarDB);
+document.addEventListener('DOMContentLoaded', PaintDB);
 
-ListadeComprasUI.addEventListener('click', (e) => {
+TaskListUI.addEventListener('click', (e) => {
     e.preventDefault();
     if(e.target.innerHTML === 'done' || e.target.innerHTML === 'delete'){
-        let product = e.path[2].childNodes[3].innerHTML; 
-        let marc = e.path[2].childNodes[5].innerHTML;
-        let cantd = e.path[2].childNodes[7].innerHTML;
+        let task = e.path[2].childNodes[3].innerHTML;
         if(e.target.innerHTML === 'delete'){
-            // Acción de Eliminar
-            EliminarDB(product, marc, cantd);
+            // Delete action
+            DeleteDB(task);
         }
         if(e.target.innerHTML === 'done'){
-            // Acción de Editar
-            EditarDB(product, marc, cantd);
+            // Action to change status
+            ChangeStatusDB(task);
         }
     }
 })
